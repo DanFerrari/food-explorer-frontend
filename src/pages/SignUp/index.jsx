@@ -1,14 +1,21 @@
 import {Container} from './styles';
-
-
+import {Input} from '../../components/Input'
+import{Button} from '../../components/Button'
 export function Signup(){
 
-return(
-    <Container>
-<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus, ipsam ipsum fugiat optio natus nisi alias aut impedit aperiam tenetur exercitationem rerum architecto cum neque incidunt voluptate voluptas, ullam eum.</p>
- 
-       
-    </Container>
 
+
+
+return(<Container>
+<Input
+title='Seu nome'
+placeholder="Exemplo:Maria da Silva"
+/>
+<Button title="Criar Conta"/>
+
+    
+</Container>
+
+ 
 );
 }

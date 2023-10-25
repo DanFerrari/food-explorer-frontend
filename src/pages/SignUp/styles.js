@@ -7,13 +7,9 @@ width: 100vw;
 display: flex;
 align-items: center;
 justify-content: center;
-background-color: white;
 
-> p {
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
 
-}
+
+
 `;
 

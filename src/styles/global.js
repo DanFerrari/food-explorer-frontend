@@ -25,6 +25,7 @@ a{
 button, a{
   cursor: pointer;
   transition: filter 0.2s;
+  
 }
 button:hover , a:hover{
 filter: brightness(0.9);
