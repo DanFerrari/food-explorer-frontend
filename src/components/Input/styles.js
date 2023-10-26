@@ -33,11 +33,15 @@ height: 48px;
 
 
 }
->svg { 
-margin-left: 16px;
 
 
+>label{
+  font-family: 'Roboto', sans-serif;
+  color: ${({theme}) => theme.COLORS.LIGHT_400};
 
 }
+
+
+
 
 `;
