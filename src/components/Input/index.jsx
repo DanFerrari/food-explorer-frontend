@@ -7,8 +7,7 @@ export function Input({icon:Icon,title,...rest}){
 return( 
 <Container>
 
-<label>{title}</label>
-{Icon && <Icon size= {20}/> }
+<label>{title}</label>  
 <input  {...rest}/>
 
 </Container>
