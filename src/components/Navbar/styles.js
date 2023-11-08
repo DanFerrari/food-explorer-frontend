@@ -22,6 +22,7 @@ gap:32px;
     color: ${({theme}) => theme.COLORS.LIGHT_100};
     font-weight: bold;
     font-size:24px;
+    cursor: pointer;
 }
 
 >#input-text{

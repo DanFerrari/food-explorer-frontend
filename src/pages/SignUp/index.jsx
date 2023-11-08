@@ -1,15 +1,14 @@
 import {Container} from './styles';
-import {Input} from '../../components/Input';
-import{Button} from '../../components/Button';
-import{Navbar} from '../../components/Navbar';
+import {Card} from '../../components/Card'
 import { FiSearch} from 'react-icons/fi';
+
 export function Signup(){
 
 
 
 
 return(<Container>
-<Navbar/>    
+<Card isAdmin={false} imgUrl="../../imgs/cha/cha100.svg" />    
 </Container>
 
  
