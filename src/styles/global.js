@@ -17,10 +17,9 @@ input,p,span
   outline: none;
 }
 button,h1,h2,h3,h4,h5,h6,a{
-  font-family: 'Poppins', sans-serif;
-  
+  font-family: 'Poppins', sans-serif;  
   outline: none;
-  color: ${({theme}) => theme.COLORS.LIGHT_100};
+  
 }
 
 
