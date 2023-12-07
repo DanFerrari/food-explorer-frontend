@@ -24,7 +24,7 @@ height: 48px;
 
   color: ${({theme}) => theme.COLORS.LIGHT_100};
   background-color: ${({theme}) => theme.COLORS.DARK_900};
-  border: none;
+  border: transparent;
   border-radius: 10px;
 
   &:placeholder{
@@ -38,7 +38,7 @@ height: 48px;
 >label{
   font-family: 'Roboto', sans-serif;
   color: ${({theme}) => theme.COLORS.LIGHT_400};
-
+ 
 }
 
 

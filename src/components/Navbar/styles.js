@@ -14,16 +14,7 @@ align-items: center;
 justify-content: center;
 gap:32px;
 
->#logo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-    color: ${({theme}) => theme.COLORS.LIGHT_100};
-    font-weight: bold;
-    font-size:24px;
-    cursor: pointer;
-}
+
 
 >#input-text{
     width: 581px;

@@ -48,6 +48,8 @@ gap: 15px;
     color: ${({theme}) => theme.COLORS.CAKE_200};
     font-size: x-large;
     align-self: center;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
 
 }
 >section{

@@ -31,6 +31,8 @@ MINT_100:"#04D361",
 CAKE_100:"#065E7C",
 CAKE_200:"#82F3FF",
 
+//gradient
+GRADIENT_200:"linear-gradient(90deg, rgba(9,30,38,1) 0%, rgba(0,19,28,1) 72%);"
 
 
 }

@@ -1,14 +1,30 @@
 import {Container} from './styles';
-import { FiSearch} from 'react-icons/fi';
-import { Card } from '../../components/Card';
+import { Logo } from '../../components/Logo';
+import {Input} from '../../components/Input';
+import {Button} from '../../components/Button';
+
+
+
 export function Signup(){
-
-
-
+  
 
 return(<Container>
+<Logo/>
+<form action="">
 
-<Card imgUrl={"src/assets/imgs/parma/parma200.svg"} title={"Parma"} dishDescription={"Presunto de parma e rúcula em um pão com fermentação natural."}/>
+        <span>Crie sua conta</span>
+
+                <Input title='Seu nome' placeholder='Exemplo: Maria da Silva'/>
+
+                <Input title='Email' placeholder='Exemplo: exemplo@exemplo.com.br'/>
+                
+                <Input title='Seu nome' placeholder='Exemplo: No mínimo 6 caracteres'/>
+
+        <Button title='Criar conta'/>
+
+        <a href="">Já tenho uma conta</a>        
+
+</form>
 
 </Container>
 

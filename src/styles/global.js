@@ -10,7 +10,7 @@ body{
   background-color: ${({theme}) => theme.COLORS.DARK_400};
   }
 
-input,p,span 
+input ,span 
 {
   font-family: 'Roboto', sans-serif;
   
