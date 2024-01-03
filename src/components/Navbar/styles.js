@@ -8,7 +8,7 @@ width: 100vw;
 height: 104px;
 position: fixed;
 top: 0;
-
+z-index: 1000;
 display: flex;
 align-items: center;
 justify-content: center;
