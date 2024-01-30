@@ -8,10 +8,7 @@ import 'swiper/css/navigation'
 import { Pagination, Navigation } from 'swiper/modules';
 
 export function Home() {
-const dish = {
-    title: "Coxinha",
-    dishDescription: "Coxinha com queijo e requeijão",
-}
+
 
 
   return (
