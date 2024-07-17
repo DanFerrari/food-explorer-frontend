@@ -1,47 +1,28 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-width: 348px;
-height: 72px;
-display: flex;
-align-items: start;
-flex-direction: column;
-gap:8px;
-
-
-color: ${({theme}) => theme.COLORS.LIGHT_500 };
-
-
-
-
-
-> input {
-
-    width: 348px;
-height: 48px;
-
-  padding: 12px;
-
-  color: ${({theme}) => theme.COLORS.LIGHT_100};
-  background-color: ${({theme}) => theme.COLORS.DARK_900};
-  border: transparent;
-  border-radius: 10px;
-
-  &:placeholder{
-    color:${({theme}) => theme.COLORS.LIGHT_500};
-  }
-
-
-}
-
-
->label{
-  font-family: 'Roboto', sans-serif;
-  color: ${({theme}) => theme.COLORS.LIGHT_400};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
  
-}
+  border-radius: 0.5rem;
+  
+  > input {
+    height: 4.8rem;
+    width: 100%;
+    
+    padding: 1.2rem 1.4rem;
+    color: ${({ theme }) => theme.COLORS.WHITE};
+    background: transparent;
+    border: 0;
 
+    &::placeholder {
+      color: ${({ theme }) => theme.COLORS.GRAY_300};
+    }
 
-
-
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
+    }
+  }
 `;

@@ -1,17 +1,17 @@
-import { Container } from './styles';
-import React from 'react';
-import {Logo} from '../Logo';
+import { Container, Brand, Copyright } from "./styles";
 
-export function Footer(){
+import brand from "../../assets/footer-brand.svg";
 
+export function Footer() {
+  return (
+    <Container>
+      <Brand>
+        <img src={brand} alt="Logo" />
+      </Brand>
 
-return(
-<Container>
-
-<Logo/>
-<span>
-© 2024 - Todos os direitos reservados.
-</span>
-</Container>
-)
+      <Copyright>
+        © 2023 - Todos os direitos reservados.
+      </Copyright>
+    </Container>
+  );
 }

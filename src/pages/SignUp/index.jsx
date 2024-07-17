@@ -1,71 +1,96 @@
-import { useState} from 'react';
-import {Container} from './styles';
-import { Logo } from '../../components/Logo';
-import {Input} from '../../components/Input';
-import {Button} from '../../components/Button';
-import{api} from '../../services/api'
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
+import { api } from "../../services/api";
 
+import { Container, Form, Brand } from "./styles";
 
+import { Section } from '../../components/Section';
+import { Input } from '../../components/Input';
+import { Button } from "../../components/Button";
 
-export function SignUp(){
- const [name, setName ] = useState(""); 
- const [email, setEmail ] = useState(""); 
- const [password, setPassword] = useState("");
+import brand from "../../assets/brand.svg";
 
- const navigate = useNavigate();
- function handleSignUp(){
-        if (!name || !email || !password) {
-                return alert("Preencha todos os campos!");
+export function SignUp() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  function handleSignUp() {
+    if (!name || !email || !password) {
+      return alert("Preencha todos os campos!");
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+    
+      
+      return alert("Digite um e-mail válido!");
+    }
+
+    if (password.length < 6) {
+      return alert("A senha deve ter no mínimo 6 caracteres!");
+    }
+
+    setLoading(true);
+
+    api
+      .post("/users", { name, email, password })
+      .then(() => {
+        alert("Usuário cadastrado com sucesso!");
+        navigate(-1);
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("Não foi possível cadastrar.");
         }
+      })
+      .finally(() => setLoading(false));
+  }
 
-        api.post("/users", {name, email, password }).then(() => {
-                alert("Conta criada com sucesso!");
-                navigate("/");
+  return (
+    <Container>
+      <Brand>
+        <img src={brand} alt="Logo" />
+      </Brand>
 
-        })
-        .catch(error => {
-                if(error.response){
-                        alert(error.response.data.message);
-                }
-                else{
-                        alert("Não foi possível cadastrar");
-                }
-        });
-}
+      <Form>
+        <h2>Crie sua conta</h2>
 
+        <Section title="Seu nome">
+          <Input 
+            placeholder="Exemplo: Maria da Silva" 
+            type="text"
+            onChange={e => setName(e.target.value)}
+          />
+        </Section>
 
+        <Section title="Email">
+          <Input 
+            placeholder="Exemplo: exemplo@exemplo.com.br" 
+            type="text"
+            onChange={e => setEmail(e.target.value)}
+          />
+        </Section>
 
-return(<Container>
-<Logo/>
-<form action="">
+        <Section title="Senha">
+          <Input 
+            placeholder="No mínimo 6 caracteres" 
+            type="password"
+            onChange={e => setPassword(e.target.value)}
+          />
+        </Section>
 
-        <span>Crie sua conta</span>
+        <Button title="Criar conta" onClick={handleSignUp} loading={loading} />
 
-                <Input
-                 title='Seu nome'
-                 placeholder='Exemplo: Maria da Silva'
-                 onChange = {e => setName(e.target.value)}
-                 />
-
-                <Input title='Email'
-                 placeholder='Exemplo: exemplo@exemplo.com.br'
-                 onChange = {e => setEmail(e.target.value)}
-                 />
-                
-                <Input title='Senha' 
-                placeholder='Exemplo: No mínimo 6 caracteres'
-                onChange = { e => setPassword(e.target.value)}
-                />
-
-        <Button title='Criar conta' onClick={handleSignUp}/>
-
-        <Link to="/" >Já tenho uma conta</Link>        
-
-</form>
-
-</Container>
-
-);
+        <Link to="/">
+          Já tenho uma conta
+        </Link>
+      </Form>
+    </Container>
+  );
 }

@@ -1,41 +1,60 @@
 import { useState } from 'react';
-import {Container} from './styles';
-import { Logo } from '../../components/Logo';
-import {Input} from '../../components/Input';
-import {Button} from '../../components/Button';
-import {useAuth} from '../../hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
+import { useAuth } from '../../hooks/auth';
 
-export function SignIn(){
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
-  const {signIn} = useAuth();
+import { Container, Form, Brand } from "./styles";
 
-  function handleSignIn(){
-    signIn({email, password});
+import { Section } from '../../components/Section';
+import { Input } from '../../components/Input';
+import { Button } from "../../components/Button";
+
+import brand from "../../assets/brand.svg";
+
+export function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { signIn } = useAuth();
+
+  function handleSignIn() {
+    setLoading(true);
+
+    signIn({ email, password }).finally(() => setLoading(false));
   }
 
-return(<Container>
-<Logo/>
-<form action="">
+  return (
+    <Container>
+      <Brand>
+        <img src={brand} alt="Logo" />
+      </Brand>
 
-        <span>Faça login</span>
+      <Form>
+        <h2>Faça seu login</h2>
 
+        <Section title="Email">
+          <Input 
+            placeholder="Exemplo: exemplo@exemplo.com.br" 
+            type="text"
+            onChange={e => setEmail(e.target.value)}
+          />
+        </Section>
 
-                <Input class="inputSign" title='Email' placeholder='Exemplo: exemplo@exemplo.com.br' onChange={e => setEmail(e.target.value)}/>
-                
-                <Input class="inputSign" title='Senha' placeholder='No mínimo 6 caracteres' onChange={e => setPassword(e.target.value)}/>
+        <Section title="Senha">
+          <Input 
+            placeholder="No mínimo 6 caracteres" 
+            type="password"
+            onChange={e => setPassword(e.target.value)}
+          />
+        </Section>
 
-        <Button title='Entrar' onClick={handleSignIn}/>
+        <Button title="Entrar" onClick={handleSignIn} loading={loading} />
 
         <Link to="/register">
-  Criar Conta
-</Link>        
-
-</form>
-
-</Container>
-
-);
+          Criar uma conta
+        </Link>
+      </Form>
+    </Container>
+  );
 }

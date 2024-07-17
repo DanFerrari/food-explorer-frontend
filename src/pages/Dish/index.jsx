@@ -1,45 +1,167 @@
-import {Container} from './styles';
-import {Navbar} from '../../components/Navbar';
-import { Button } from '../../components/Button';
-import { ButtonCount } from '../../components/ButtonCount';
-export function Dish(){
+import { RxCaretLeft } from "react-icons/rx";
+import { useMediaQuery } from 'react-responsive';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-return(
-<Container>
-    <Navbar/>
-    <a href=""><svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M11.7071 0.292893C12.0976 0.683417 12.0976 1.31658 11.7071 1.70711L2.41421 11L11.7071 20.2929C12.0976 20.6834 12.0976 21.3166 11.7071 21.7071C11.3166 22.0976 10.6834 22.0976 10.2929 21.7071L0.292893 11.7071C-0.0976311 11.3166 -0.0976311 10.6834 0.292893 10.2929L10.2929 0.292893C10.6834 -0.0976311 11.3166 -0.0976311 11.7071 0.292893Z" fill="white"/>
-</svg> voltar
-</a>
+import { api } from '../../services/api';
 
-<div class="container">
-<img src="src\assets\imgs\ravanello\ravanello400.svg" alt="" />
-    
-    <div class="content">
-    <h1>Salada Ravanello</h1>
-    <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim. O pão naan dá um toque especial.</p>
+import { Container, Content } from "./styles";
 
-    <div id='tags'>
-        <span>alface</span>
-        <span>cebola</span>
-        <span>pão naan</span>
-        <span>pepino</span>
-        <span>rabanete</span>
-        
-    </div>
+import { Header } from '../../components/Header';
+import { Menu } from "../../components/Menu";
+import { ButtonText } from "../../components/ButtonText";
+import { Tag } from '../../components/Tag';
+import { NumberPicker } from "../../components/NumberPicker";
+import { Button } from "../../components/Button";
+import { Footer } from '../../components/Footer';
 
-            <div class="confirm">
-                <ButtonCount/>
-                <Button id='btnIncluir' title="incluir - R$25,00"/>
+export function Dish({ isAdmin, user_id }) {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-            </div>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [data, setData] = useState(null);
 
+  const params = useParams();
+  const navigate = useNavigate();
 
-    </div>
+  const [number, setNumber] = useState(1);
+  const [cartId, setCartId] = useState(null);
 
+  const [loading, setLoading] = useState(false);
 
-</div>
+  function handleBack() {
+    navigate(-1);
+  }
 
-</Container>
-)
-};
+  function handleEdit() {
+    navigate(`/edit/${params.id}`);
+  }
+
+  useEffect(() => {
+    async function fetchDish() {
+      const response = await api.get(`/dishes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchDish();
+  }, []);
+
+  async function handleInclude() {
+    setLoading(true);
+
+    try {
+      const cartItem = {
+        dish_id: data.id,
+        name: data.name,
+        quantity: number,
+      };
+
+      const response = await api.get('/carts', { params: { created_by: user_id } });
+      const cart = response.data[0];
+
+      if (cart) {
+        await api.patch(`/carts/${cart.id}`, { cart_items: [cartItem] });
+      } else {
+        const createResponse = await api.post('/carts', { cart_items: [cartItem], created_by: user_id });
+        const createdCart = createResponse.data;
+
+        setCartId(createdCart.id);
+      }
+
+      alert('Prato adicionado ao carrinho!');
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert('Não foi possível adicionar ao carrinho.');
+        console.log('Erro ao adicionar ao carrinho:', error);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Container>
+      {!isDesktop && 
+        <Menu 
+          isAdmin={isAdmin} 
+          isDisabled={true} 
+          isMenuOpen={isMenuOpen} 
+          setIsMenuOpen={setIsMenuOpen} 
+        />
+      }
+
+      <Header 
+        isAdmin={isAdmin} 
+        isDisabled={true} 
+        isMenuOpen={isMenuOpen} 
+        setIsMenuOpen={setIsMenuOpen} 
+      />
+
+      {
+        data && 
+        <main>
+          <div>
+            <header>
+              <ButtonText onClick={handleBack}>
+                <RxCaretLeft />
+                voltar
+              </ButtonText>
+            </header>
+
+            <Content>
+              <img src={`${api.defaults.baseURL}/files/${data.image}`} alt={data.name} />
+
+              <div>
+                <h1>{data.name}</h1>
+                <p>{data.description}</p>
+              
+                {
+                  data.ingredients && 
+                  <section>
+                    {
+                      data.ingredients.map(ingredient => (
+                        <Tag 
+                          key={String(ingredient.id)} 
+                          title={ingredient.name} 
+                        />
+                      ))
+                    }
+                  </section>
+                }
+
+                <div className="buttons">
+                  {isAdmin ? 
+                    <Button 
+                      title="Editar prato" 
+                      className="edit" 
+                      onClick={handleEdit}
+                      loading={loading}
+                    /> : 
+                    <>
+                      <NumberPicker number={number} setNumber={setNumber} />
+                      <Button 
+                        title={
+                          isDesktop ? 
+                          `incluir ∙ R$ ${(data.price * number).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 
+                          `pedir ∙ R$ ${(data.price * number).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        } 
+                        className="include" 
+                        isCustomer={!isDesktop}
+                        onClick={handleInclude}
+                        loading={loading}
+                      />
+                    </>
+                  }
+                </div>
+              </div>
+            </Content>
+          </div>
+        </main>
+      }
+
+      <Footer />
+    </Container>
+  );
+}
