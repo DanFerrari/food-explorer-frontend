@@ -103,7 +103,7 @@ $ npm run dev
 
 ⚠️ **Importante**: Este projeto utiliza uma hospedagem gratuita para o back-end, portanto, pode haver atrasos no tempo de resposta do servidor.
 
-<h2 id="users">👩🏾‍💻 Personas</h2>
+<h2 id="users">👩🏾‍💻 Usuários</h2>
 
 O Food Explorer possui dois tipos de usuários: o admin e o usuário comum. Você pode criar um novo usuário ou testar a aplicação usando as seguintes informações de login:
 
